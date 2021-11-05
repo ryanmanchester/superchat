@@ -38,7 +38,7 @@ function App() {
       <h1>Welcome to Superchat</h1>
       </header>
       <section>
-      {user ? `Hello! Thank you for signing in!` : <SignIn /> }
+      {user ? <ChatRoom /> : <SignIn /> }
       </section>
     </div>
   );
@@ -61,6 +61,22 @@ function SignIn() {
   return (
     <button onClick={signInWithGoogle}>Sign In With Google</button>
   )
+}
+
+function ChatRoom() {
+  const messageRef = firestore.collection('messages');
+  const query = messageRef.orderBy('createdAt').limit(25);
+  const [messages] = useCollectionData(query, {idField: 'id'});
+  return (
+    <div>
+      {messages && messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
+    </div>
+  )
+}
+
+function ChatMessage(props){
+  const {text, uid} = props.message;
+  return <p>{text}</p>
 }
 
 export default App;
