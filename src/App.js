@@ -5,6 +5,7 @@ import 'firebase/auth';
 import { initializeApp } from "firebase/app";
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 
 
 // Import the functions you need from the SDKs you need
@@ -23,16 +24,26 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
-
-// const auth = firebase.auth();
+const provider = new GoogleAuthProvider();
+const auth = getAuth();
+signInWithPopup(auth, provider)
+  .then((result) => {
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const token = credential.accessToken;
+    const user = result.user;
+  }).catch(error => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    const email = error.email;
+    const credential = GoogleAuthProvider.credentialFromError(error);
+  })
 // const firestore = firebase.firestore();
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-
+      <h1>Welcome to Superchat</h1>
       </header>
     </div>
   );
