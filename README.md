@@ -1,4 +1,4 @@
-## Superchat is a chat app I built to learn Firebase with React
+## Superchat is a chat app built to learn Firebase with React
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
